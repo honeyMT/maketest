@@ -1,0 +1,911 @@
+#include<iostream>
+#include<Windows.h>
+using namespace std;
+
+class Person
+{
+public:
+	virtual void BuyTickets()
+	{
+		cout << " 买票" << endl;
+	}
+
+protected:
+	string _name;   // 姓名    
+};
+
+class Student : public Person
+{
+public:
+	virtual void BuyTickets()
+	{
+		cout << " 买票-半价 " << endl;
+	}
+
+protected:
+	int _num;   //学号    
+};
+
+void Test()
+{
+	Person p;
+	Student q;
+	Person* ptr = &q;
+	p.BuyTickets();
+	ptr->BuyTickets();
+	system("pause");
+}
+
+//class Person
+//{
+//public:
+//	virtual void BuyTickets()
+//	{
+//		cout << " 买票" << endl;
+//	}
+//protected:
+//	string _name;  //姓名    
+//};
+//
+//class Student : public Person
+//{
+//public:
+//	void BuyTickets()
+//	{
+//		cout << " 买票-半价 " << endl;
+//	}
+//protected:
+//	int _num;  //学号    
+//};
+//
+//void Fun(Person& p)
+//{
+//	p.BuyTickets();
+//}
+//
+//void Test()
+//{
+//	Person p;
+//	Student s;
+//	Fun(p);
+//	Fun(s);
+//}
+
+
+//typedef void(*FUNC)(void);
+//void PrintVTable(int* VTable)
+//{
+//	cout << " 虚表地址" << VTable << endl;
+//
+//	for (inti = 0; VTable[i] != 0; ++i)
+//	{
+//		printf(" 第%d个虚函数地址 :0X%x,->", i, VTable[i]);
+//		FUNC f = (FUNC)VTable[i];
+//		f();
+//	}
+//
+//	cout << endl;
+//}
+
+//
+//int main()
+//{
+//	Derive d1;
+//	PrintVTable((int*)(*(int*)(&d1)));
+//	system("pause");
+//	return0;
+//}
+
+//#include<iostream>  
+//#include<windows.h>  
+//using namespace std;
+//
+//class Base
+//{
+//public:
+//	virtual void func1()
+//	{}
+//
+//	virtual void func2()
+//	{}
+//
+//private:
+//	int a;
+//};
+//
+//void Test1()
+//{
+//	Base b1;
+//}
+//
+//int main()
+//
+//{
+//	Test1();
+//	system("pause");
+//	return 0;
+//}
+
+
+//单继承  
+//class Base
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Base::func1" << endl;
+//	}
+//
+//	virtual void func2()
+//	{
+//		cout << "Base::func2" << endl;
+//	}
+//
+//private:
+//	int a;
+//};
+//
+//class Derive :public Base
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Derive::func1" << endl;
+//	}
+//
+//	virtual void func3()
+//	{
+//		cout << "Derive::func3" << endl;
+//	}
+//
+//	virtual void func4()
+//	{
+//		cout << "Derive::func4" << endl;
+//	}
+//
+//private:
+//	int b;
+//};
+//
+//typedef void(*FUNC)();
+//void PrintVTable(int* VTable)
+//{
+//	cout << "该虚函数表的地址为 - > " << VTable << endl;
+//	cout << "************************************************************" << endl;
+//	for (int i = 0; VTable[i] != 0; i++)
+//	{
+//		printf("该虚函数表中的第%d个成员函数地址为 %p - > ", i, VTable[i]);
+//		FUNC fun = (FUNC)VTable[i];
+//		fun();
+//	}
+//	cout << "************************************************************" << endl;
+//}
+//
+//void Test()
+//{
+//	Derive d1;
+//	PrintVTable((int*)(*(int*)(&d1)));
+//	system("pause");
+//}
+
+
+//多继承
+//class Base1
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Base1::func1" << endl;
+//	}
+//
+//	virtual void func2()
+//	{
+//		cout << "Base1::func2" << endl;
+//	}
+//
+//private:
+//	int b1;
+//};
+//
+//class Base2
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Base2::func1" << endl;
+//	}
+//
+//	virtual void func2()
+//	{
+//		cout << "Base2::func2" << endl;
+//	}
+//
+//private:
+//	int b2;
+//};
+//
+//
+//class Derive : public Base1, public Base2
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Derive::func1" << endl;
+//	}
+//
+//	virtual void func3()
+//	{
+//		cout << "Derive::func3" << endl;
+//	}
+//
+//private:
+//	int d1;
+//};
+//
+//typedef void(*FUNC) ();
+//void PrintVTable(int* VTable)
+//{
+//	cout << " 虚表地址>" << VTable << endl;
+//	cout << "--------------------------------------------" << endl;
+//	for (int i = 0; VTable[i] != 0; ++i)
+//	{
+//		printf(" 第%d个虚函数地址 :0X%x,->", i, VTable[i]);
+//		FUNC f = (FUNC)VTable[i];
+//		f();
+//	}
+//	cout << "--------------------------------------------" << endl;
+//	cout << endl;
+//}
+//
+//
+//void Test()
+//{
+//	Derive d1;
+//	//Base2虚函数表在对象Base1后面    
+//	int* VTable = (int*)(*(int*)&d1);
+//	PrintVTable(VTable);
+//	int* VTable2 = (int *)(*((int*)&d1 + sizeof (Base1) / 4));
+//	PrintVTable(VTable2);
+//}
+//int main()
+//{
+//	Test1();
+//	system("pause");
+//	return 0;
+//}
+
+
+
+//多态  析构函数  
+//class Base
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Base::func1" << endl;
+//	}
+//
+//	virtual void func2()
+//	{
+//		cout << "Base::func2" << endl;
+//	}
+//
+//	virtual ~Base()
+//	{
+//		cout << "~Base" << endl;
+//	}
+//
+//private:
+//	int a;
+//};
+//
+//class Derive :public Base
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Derive::func1" << endl;
+//	}
+//	~Derive()
+//	{
+//		cout << "~Derive" << endl;
+//	}
+//private:
+//	int b;
+//};
+//
+//void Test()
+//{
+//	Base* q = new Derive;
+//	delete q;
+//	system("pause");
+//}
+
+//
+////多态  析构函数  
+//class Base
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Base::func1" << endl;
+//	}
+//
+//	virtual void func2()
+//	{
+//		cout << "Base::func2" << endl;
+//	}
+//
+//	virtual ~Base()
+//	{
+//		cout << "~Base" << endl;
+//	}
+//
+//private:
+//	int a;
+//};
+//
+//class Derive :public Base
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Derive::func1" << endl;
+//	}
+//	virtual ~Derive()
+//	{
+//		cout << "~Derive" << endl;
+//	}
+//private:
+//	int b;
+//};
+//
+//void Test1()
+//{
+//	Base* q = new Derive;
+//	delete q;
+//}
+//int main()
+//{
+//	Test1();
+//	system("pause");
+//	return 0;
+//}
+
+
+//多继承
+//class Base1
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Base1::func1" << endl;
+//	}
+//
+//	virtual void func2()
+//	{
+//		cout << "Base1::func2" << endl;
+//	}
+//
+//private:
+//	int b1;
+//};
+//
+//class Base2
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Base2::func1" << endl;
+//	}
+//
+//	virtual void func2()
+//	{
+//		cout << "Base2::func2" << endl;
+//	}
+//
+//private:
+//	int b2;
+//};
+//
+//
+//class Derive : public Base1, public Base2
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Derive::func1" << endl;
+//	}
+//
+//	virtual void func3()
+//	{
+//		cout << "Derive::func3" << endl;
+//	}
+//
+//private:
+//	int d1;
+//};
+//
+//
+//typedef void(*FUNC)();
+//
+//void PrintVTable(int* VTables)
+//{
+//	cout << "该虚函数的地址为 ->>" << VTables << endl;
+//	cout << "____________________________________________________________________________" << endl;
+//	for (int i = 0; VTables[i] != 0; i++)
+//	{
+//		printf("该虚函数表中第%d个元素的地址为 %p ->  ", i, VTables[i]);
+//		FUNC fun = (FUNC)VTables[i];
+//		fun();
+//	}
+//	cout << "____________________________________________________________________________" << endl;
+//
+//}
+//
+//void Test()
+//{
+//	Derive d1;
+//	int* VTable1 = (int*)(*(int*)(&d1));
+//	PrintVTable(VTable1);
+//
+//	int* VTable2 = (int*)(*((int*)&d1 + (sizeof(Base1) / 4)));
+//	PrintVTable(VTable2);
+//
+//	system("pause");
+//}#include<iostream>
+#include<Windows.h>
+using namespace std;
+
+class Person
+{
+public:
+	virtual void BuyTickets()
+	{
+		cout << " 买票" << endl;
+	}
+
+protected:
+	string _name;   // 姓名    
+};
+
+class Student : public Person
+{
+public:
+	virtual void BuyTickets()
+	{
+		cout << " 买票-半价 " << endl;
+	}
+
+protected:
+	int _num;   //学号    
+};
+
+void Test()
+{
+	Person p;
+	Student q;
+	Person* ptr = &q;
+	p.BuyTickets();
+	ptr->BuyTickets();
+	system("pause");
+}
+
+//class Person
+//{
+//public:
+//	virtual void BuyTickets()
+//	{
+//		cout << " 买票" << endl;
+//	}
+//protected:
+//	string _name;  //姓名    
+//};
+//
+//class Student : public Person
+//{
+//public:
+//	void BuyTickets()
+//	{
+//		cout << " 买票-半价 " << endl;
+//	}
+//protected:
+//	int _num;  //学号    
+//};
+//
+//void Fun(Person& p)
+//{
+//	p.BuyTickets();
+//}
+//
+//void Test()
+//{
+//	Person p;
+//	Student s;
+//	Fun(p);
+//	Fun(s);
+//}
+
+
+//typedef void(*FUNC)(void);
+//void PrintVTable(int* VTable)
+//{
+//	cout << " 虚表地址" << VTable << endl;
+//
+//	for (inti = 0; VTable[i] != 0; ++i)
+//	{
+//		printf(" 第%d个虚函数地址 :0X%x,->", i, VTable[i]);
+//		FUNC f = (FUNC)VTable[i];
+//		f();
+//	}
+//
+//	cout << endl;
+//}
+
+//
+//int main()
+//{
+//	Derive d1;
+//	PrintVTable((int*)(*(int*)(&d1)));
+//	system("pause");
+//	return0;
+//}
+
+//#include<iostream>  
+//#include<windows.h>  
+//using namespace std;
+//
+//class Base
+//{
+//public:
+//	virtual void func1()
+//	{}
+//
+//	virtual void func2()
+//	{}
+//
+//private:
+//	int a;
+//};
+//
+//void Test1()
+//{
+//	Base b1;
+//}
+//
+//int main()
+//
+//{
+//	Test1();
+//	system("pause");
+//	return 0;
+//}
+
+
+//单继承  
+//class Base
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Base::func1" << endl;
+//	}
+//
+//	virtual void func2()
+//	{
+//		cout << "Base::func2" << endl;
+//	}
+//
+//private:
+//	int a;
+//};
+//
+//class Derive :public Base
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Derive::func1" << endl;
+//	}
+//
+//	virtual void func3()
+//	{
+//		cout << "Derive::func3" << endl;
+//	}
+//
+//	virtual void func4()
+//	{
+//		cout << "Derive::func4" << endl;
+//	}
+//
+//private:
+//	int b;
+//};
+//
+//typedef void(*FUNC)();
+//void PrintVTable(int* VTable)
+//{
+//	cout << "该虚函数表的地址为 - > " << VTable << endl;
+//	cout << "************************************************************" << endl;
+//	for (int i = 0; VTable[i] != 0; i++)
+//	{
+//		printf("该虚函数表中的第%d个成员函数地址为 %p - > ", i, VTable[i]);
+//		FUNC fun = (FUNC)VTable[i];
+//		fun();
+//	}
+//	cout << "************************************************************" << endl;
+//}
+//
+//void Test()
+//{
+//	Derive d1;
+//	PrintVTable((int*)(*(int*)(&d1)));
+//	system("pause");
+//}
+
+
+//多继承
+//class Base1
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Base1::func1" << endl;
+//	}
+//
+//	virtual void func2()
+//	{
+//		cout << "Base1::func2" << endl;
+//	}
+//
+//private:
+//	int b1;
+//};
+//
+//class Base2
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Base2::func1" << endl;
+//	}
+//
+//	virtual void func2()
+//	{
+//		cout << "Base2::func2" << endl;
+//	}
+//
+//private:
+//	int b2;
+//};
+//
+//
+//class Derive : public Base1, public Base2
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Derive::func1" << endl;
+//	}
+//
+//	virtual void func3()
+//	{
+//		cout << "Derive::func3" << endl;
+//	}
+//
+//private:
+//	int d1;
+//};
+//
+//typedef void(*FUNC) ();
+//void PrintVTable(int* VTable)
+//{
+//	cout << " 虚表地址>" << VTable << endl;
+//	cout << "--------------------------------------------" << endl;
+//	for (int i = 0; VTable[i] != 0; ++i)
+//	{
+//		printf(" 第%d个虚函数地址 :0X%x,->", i, VTable[i]);
+//		FUNC f = (FUNC)VTable[i];
+//		f();
+//	}
+//	cout << "--------------------------------------------" << endl;
+//	cout << endl;
+//}
+//
+//
+//void Test()
+//{
+//	Derive d1;
+//	//Base2虚函数表在对象Base1后面    
+//	int* VTable = (int*)(*(int*)&d1);
+//	PrintVTable(VTable);
+//	int* VTable2 = (int *)(*((int*)&d1 + sizeof (Base1) / 4));
+//	PrintVTable(VTable2);
+//}
+//int main()
+//{
+//	Test1();
+//	system("pause");
+//	return 0;
+//}
+
+
+
+//多态  析构函数  
+//class Base
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Base::func1" << endl;
+//	}
+//
+//	virtual void func2()
+//	{
+//		cout << "Base::func2" << endl;
+//	}
+//
+//	virtual ~Base()
+//	{
+//		cout << "~Base" << endl;
+//	}
+//
+//private:
+//	int a;
+//};
+//
+//class Derive :public Base
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Derive::func1" << endl;
+//	}
+//	~Derive()
+//	{
+//		cout << "~Derive" << endl;
+//	}
+//private:
+//	int b;
+//};
+//
+//void Test()
+//{
+//	Base* q = new Derive;
+//	delete q;
+//	system("pause");
+//}
+
+//
+////多态  析构函数  
+//class Base
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Base::func1" << endl;
+//	}
+//
+//	virtual void func2()
+//	{
+//		cout << "Base::func2" << endl;
+//	}
+//
+//	virtual ~Base()
+//	{
+//		cout << "~Base" << endl;
+//	}
+//
+//private:
+//	int a;
+//};
+//
+//class Derive :public Base
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Derive::func1" << endl;
+//	}
+//	virtual ~Derive()
+//	{
+//		cout << "~Derive" << endl;
+//	}
+//private:
+//	int b;
+//};
+//
+//void Test1()
+//{
+//	Base* q = new Derive;
+//	delete q;
+//}
+//int main()
+//{
+//	Test1();
+//	system("pause");
+//	return 0;
+//}
+
+
+//多继承
+//class Base1
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Base1::func1" << endl;
+//	}
+//
+//	virtual void func2()
+//	{
+//		cout << "Base1::func2" << endl;
+//	}
+//
+//private:
+//	int b1;
+//};
+//
+//class Base2
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Base2::func1" << endl;
+//	}
+//
+//	virtual void func2()
+//	{
+//		cout << "Base2::func2" << endl;
+//	}
+//
+//private:
+//	int b2;
+//};
+//
+//
+//class Derive : public Base1, public Base2
+//{
+//public:
+//	virtual void func1()
+//	{
+//		cout << "Derive::func1" << endl;
+//	}
+//
+//	virtual void func3()
+//	{
+//		cout << "Derive::func3" << endl;
+//	}
+//
+//private:
+//	int d1;
+//};
+//
+//
+//typedef void(*FUNC)();
+//
+//void PrintVTable(int* VTables)
+//{
+//	cout << "该虚函数的地址为 ->>" << VTables << endl;
+//	cout << "____________________________________________________________________________" << endl;
+//	for (int i = 0; VTables[i] != 0; i++)
+//	{
+//		printf("该虚函数表中第%d个元素的地址为 %p ->  ", i, VTables[i]);
+//		FUNC fun = (FUNC)VTables[i];
+//		fun();
+//	}
+//	cout << "____________________________________________________________________________" << endl;
+//
+//}
+//
+//void Test()
+//{
+//	Derive d1;
+//	int* VTable1 = (int*)(*(int*)(&d1));
+//	PrintVTable(VTable1);
+//
+//	int* VTable2 = (int*)(*((int*)&d1 + (sizeof(Base1) / 4)));
+//	PrintVTable(VTable2);
+//
+//	system("pause");
+//}
