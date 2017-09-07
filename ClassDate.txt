@@ -1,0 +1,240 @@
+#includeiostream
+#includeWindows.h
+#includeassert.h
+using namespace std;
+
+class Date
+{
+
+public
+
+	Date(int year = 1997,int month = 1,int day = 1)
+	years(year)
+	, months(month)
+	, days(day)
+	{
+		assert(IScorrect());
+	}
+
+	Date& operator=(const Date& d)
+	{
+		if (this != &d)
+		{
+			years = d.years;
+			months = d.months;
+			days = d.days;
+		}
+		return this;
+	}
+
+	Date& operator + (int day)
+	{
+		while (day  365)
+		{
+			if (ISleapyear() && day  366)
+			{
+				years++;
+				day = day - 366;
+			}
+			else
+			{
+				years++;
+				day = day - 365;
+			}
+		}
+		while (day = Getmonthsday())
+		{	
+			day = day - Getmonthsday(); 注意这里的次序问题,一定先减 再加 最后再判断.
+			months++;
+			if (months  12)
+			{
+				years++;
+				months = 1;
+			}
+		}
+
+		while (day  0)
+		{	
+			DateAdvance();
+			day = day - 1;
+			days++;
+		}
+		return this;
+	}
+
+	Date& operator - (int day) 先减去一年，然后在使用加的重载,所以你只需要写一个无懈可击的加算法就够了.
+	{
+		while (day  365)
+		{
+			if (ISleapyear() && day  366)
+			{			
+				day = day - 366;
+				years--;
+			}
+			else
+			{
+				day = day - 365;
+				years--;
+			}
+		}
+		if (ISleapyear())
+		{
+			day = 366 - day;
+			years--;
+		}
+		else
+		{
+			day = 365 - day;
+			years--;
+		}
+		operator+(day);
+		return this;
+	}
+
+	void DateAdvance()
+	{
+		if (days  Getmonthsday())
+		{
+			months++;
+			days = 1;
+		}
+		if (months  12)
+		{
+			years++;
+			months = 1;
+		}
+	}
+	
+	int operator - (Date D)
+	{
+		int count = 0;
+		if (this  D)
+		{
+			while (this != D)
+			{
+				D.operator+(1);
+				count++;
+			}
+		}
+		else
+		{
+			while (this != D)
+			{
+				operator+(1);
+				count++;
+			}
+		}
+		return count;
+	}
+
+	bool ISleapyear()
+	{
+		if ((years % 4 == 0 && years % 100 != 0)  (years % 400 == 0))
+		{
+			return true;
+		}
+		return false;
+	}
+	int Getmonthsday()
+	{
+		int monthDays[13] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+		if (ISleapyear() && months == 2)
+		{
+			return 29;
+		}
+		return monthDays[months];
+	}
+
+	void print()
+	{
+		cout  目前的时间为;
+		cout  years  .  months  . days endl;
+	}
+
+	bool IScorrect()
+	{
+		if (years  0 && ((years % 4 == 0 && years % 100 != 0)  (years % 400 == 0)) && days  367)闰年
+		{
+			if (months 0 && months  13)
+			{
+				if (days  0 && days = Getmonthsday())
+				{
+					return true;
+				}
+			}
+		}
+		else if (years 0 && days  366) 非闰年
+		{
+			if (months 0 && months  13)
+			{
+				if (days  0 && days = Getmonthsday())
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	Date operator += (int day)
+	{
+		this = this + 100;
+		return this;
+	}
+	Date operator -= (int day)
+	{
+		return this = this - day;
+	}
+	inline Date& operator++()
+	{
+		this += 1;
+		return this;
+	}
+	inline Date operator++(int)
+	{
+		Date tmp(this);
+		this = this + 1;
+		return tmp;
+	}
+
+	bool operator == (const Date& d)
+	{
+		return (years == d.years&& months == d.months&&days == d.days);
+	}
+
+	bool operator != (const Date& d)
+	{
+		return !(this == d);
+	}
+
+	bool operator (const Date& d)
+	{
+		if (years  d.years 
+			(years == d.years&&months  d.months)
+			 (years == d.years&&months == d.months && days  d.days))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool operator  (const Date& d)
+	{
+		return !(this  d);
+	}
+
+	bool operator = (const Date& d)
+	{
+		return (this == d) && (this  d);
+	}
+
+	bool operator = (const Date& d)
+	{
+		return (this == d) && (this  d);
+	}
+
+private
+	int years;
+	int months;
+	int days;
+};
